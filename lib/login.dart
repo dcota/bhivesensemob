@@ -8,7 +8,7 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 //import 'package:safeharbor/pages/home.dart';
 //import 'package:safeharbor/pages/menu.dart';
 import 'package:get_storage/get_storage.dart';
-import 'menu.dart';
+import 'apiaries.dart';
 import 'home.dart';
 
 String? token = '';
@@ -54,7 +54,6 @@ class _LoginPageState extends State<LoginPage> {
         userdata.write('username', b['body']['username']);
         type = userdata.read('type');
         toggleSubmitState();
-        print(b);
         Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => const ApiaryList(),
         ));
