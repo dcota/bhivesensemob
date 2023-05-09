@@ -57,8 +57,6 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => const ApiaryList(),
         ));
-        /*Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const ApiaryList()));*/
       } else {
         toggleSubmitState();
         await showDialog<String>(

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart';
 import 'home.dart';
+import 'hives.dart';
 import 'package:bhivesensemobile/models/Apiary.dart';
 
 class ApiaryList extends StatefulWidget {
@@ -40,6 +41,30 @@ class _ApiaryListState extends State<ApiaryList> {
     );
   }*/
 
+  void showDetails(Apiary apiaryList) {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Apiary details'),
+        content: SingleChildScrollView(
+          child: ListBody(children: <Widget>[
+            Text('Location: ${apiaryList.location}'),
+            Text('Address: ${apiaryList.address}'),
+            Text('Observations: ${apiaryList.observations}'),
+          ]),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
   Future<List<Apiary>> getApiaries() async {
     var apiaryList = <Apiary>[];
     try {
@@ -49,10 +74,6 @@ class _ApiaryListState extends State<ApiaryList> {
       for (var i = 0; i < d['body'].length; i++) {
         apiaryList.add(Apiary.fromJson(d['body'][i]));
       }
-      print(d);
-      /*setState(() {
-        _apiaryList = apiaryList;
-      });*/
     } catch (e) {
       print("erro");
     }
@@ -160,30 +181,6 @@ class _ApiaryListState extends State<ApiaryList> {
                                                       fontSize: 14.0),
                                                 ),
                                               ),
-                                              /*Center(
-                                                child: Container(
-                                                  margin:
-                                                      const EdgeInsets.all(5.0),
-                                                  color: const Color.fromARGB(
-                                                      255, 226, 233, 226),
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width -
-                                                      50,
-                                                  height: 18,
-                                                  child: Text(
-                                                    'Address: ${_apiaryList[index].address}',
-                                                    textAlign:
-                                                        TextAlign.justify,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 16),
-                                                  ),
-                                                ),
-                                              ),*/
                                               Center(
                                                 child: Container(
                                                   margin:
@@ -213,8 +210,8 @@ class _ApiaryListState extends State<ApiaryList> {
                                                 children: <Widget>[
                                                   ElevatedButton.icon(
                                                     onPressed: () => {
-                                                      print(
-                                                          _apiaryList[index].id)
+                                                      showDetails(
+                                                          _apiaryList[index])
                                                     },
                                                     icon: const Icon(
                                                         Icons.zoom_in),
@@ -236,12 +233,16 @@ class _ApiaryListState extends State<ApiaryList> {
                                                   ),
                                                   ElevatedButton.icon(
                                                     onPressed: () => {
-                                                      /*Navigator.of(context)
-                                                          .pushNamed(
-                                                              '/offerEdit',
-                                                              arguments:
-                                                                  _apiaryList[
-                                                                      index])*/
+                                                      userdata.write(
+                                                          'apiaryIDtoget',
+                                                          _apiaryList[index]
+                                                              .id),
+                                                      Navigator.of(context)
+                                                          .pushReplacement(
+                                                              MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const HivesList(),
+                                                      )),
                                                     },
                                                     icon: const Icon(
                                                         Icons.zoom_in),
@@ -280,4 +281,4 @@ Widget buildAddOfferButton(BuildContext context) => FloatingActionButton(
         MaterialPageRoute(builder: (context) => const MyApp()),
       );
     },
-    child: const Icon(Icons.arrow_back));
+    child: const Icon(Icons.exit_to_app));
