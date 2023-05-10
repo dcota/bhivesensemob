@@ -132,144 +132,144 @@ class _ApiaryListState extends State<ApiaryList> {
             ),
             centerTitle: true,
           ),
-          body: Container(
-            child: Center(
-                child: Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: showProgress
-                  ? const CircularProgressIndicator()
-                  : SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height,
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            const SizedBox(
-                              height: 15.0,
-                            ),
-                            Expanded(
-                                child: ListView.builder(
-                                    padding: const EdgeInsets.only(bottom: 80),
-                                    itemCount: _apiaryList.length,
-                                    itemBuilder: ((context, index) {
-                                      return Card(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(15.0)),
-                                        color: const Color.fromARGB(
-                                            255, 226, 233, 226),
-                                        elevation: 10,
-                                        child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              ListTile(
-                                                leading: Image(
-                                                    image: AssetImage(
-                                                        'assets/$bgImage'),
-                                                    fit: BoxFit.scaleDown,
-                                                    width: 100,
-                                                    alignment:
-                                                        Alignment.center),
-                                                title: const Text(
-                                                  'Apiary',
-                                                  style:
-                                                      TextStyle(fontSize: 30),
-                                                ),
-                                                subtitle: Text(
-                                                  'ID${_apiaryList[index].id}',
+          body: Center(
+              child: Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: showProgress
+                ? const CircularProgressIndicator()
+                : SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          const SizedBox(
+                            height: 15.0,
+                          ),
+                          Expanded(
+                              child: ListView.builder(
+                                  padding: const EdgeInsets.only(
+                                      bottom: 80, left: 15, right: 15),
+                                  itemCount: _apiaryList.length,
+                                  itemBuilder: ((context, index) {
+                                    return Card(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15.0)),
+                                      color: const Color.fromARGB(
+                                          255, 226, 233, 226),
+                                      elevation: 10,
+                                      child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            ListTile(
+                                              leading: Image(
+                                                  image: AssetImage(
+                                                      'assets/$bgImage'),
+                                                  fit: BoxFit.scaleDown,
+                                                  width: 100,
+                                                  alignment: Alignment.center),
+                                              title: const Text(
+                                                'Apiary',
+                                                style: TextStyle(fontSize: 30),
+                                              ),
+                                              subtitle: Text(
+                                                _apiaryList[index].id,
+                                                style: const TextStyle(
+                                                    fontSize: 14.0),
+                                              ),
+                                            ),
+                                            Center(
+                                              child: Container(
+                                                margin:
+                                                    const EdgeInsets.all(5.0),
+                                                color: const Color.fromARGB(
+                                                    255, 226, 233, 226),
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width -
+                                                    50,
+                                                height: 18,
+                                                child: Text(
+                                                  "Location: ${_apiaryList[index].location}",
+                                                  textAlign: TextAlign.center,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                   style: const TextStyle(
-                                                      fontSize: 14.0),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 16),
                                                 ),
                                               ),
-                                              Center(
-                                                child: Container(
-                                                  margin:
-                                                      const EdgeInsets.all(5.0),
-                                                  color: const Color.fromARGB(
-                                                      255, 226, 233, 226),
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width -
-                                                      50,
-                                                  height: 18,
-                                                  child: Text(
-                                                    "Location: ${_apiaryList[index].location}",
-                                                    textAlign: TextAlign.center,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 16),
-                                                  ),
+                                            ),
+                                            ButtonBar(
+                                              alignment:
+                                                  MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                ElevatedButton.icon(
+                                                  onPressed: () => {
+                                                    showDetails(
+                                                        _apiaryList[index])
+                                                  },
+                                                  icon:
+                                                      const Icon(Icons.zoom_in),
+                                                  label: const Text('Details'),
+                                                  style: ElevatedButton.styleFrom(
+                                                      elevation: 5,
+                                                      minimumSize: const Size(
+                                                          100, 35),
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10.0)),
+                                                      onPrimary: Colors.white,
+                                                      primary:
+                                                          const Color.fromARGB(
+                                                              255, 9, 150, 27)),
                                                 ),
-                                              ),
-                                              ButtonBar(
-                                                alignment:
-                                                    MainAxisAlignment.center,
-                                                children: <Widget>[
-                                                  ElevatedButton.icon(
-                                                    onPressed: () => {
-                                                      showDetails(
-                                                          _apiaryList[index])
-                                                    },
-                                                    icon: const Icon(
-                                                        Icons.zoom_in),
-                                                    label:
-                                                        const Text('Details'),
-                                                    style: ElevatedButton.styleFrom(
-                                                        elevation: 5,
-                                                        minimumSize:
-                                                            const Size(100, 35),
-                                                        shape: RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10.0)),
-                                                        onPrimary: Colors.white,
-                                                        primary: const Color
-                                                                .fromARGB(
-                                                            255, 9, 150, 27)),
-                                                  ),
-                                                  ElevatedButton.icon(
-                                                    onPressed: () => {
-                                                      userdata.write(
-                                                          'apiaryIDtoget',
-                                                          _apiaryList[index]
-                                                              .id),
-                                                      Navigator.of(context)
-                                                          .pushReplacement(
-                                                              MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            const HivesList(),
-                                                      )),
-                                                    },
-                                                    icon: const Icon(
-                                                        Icons.zoom_in),
-                                                    label: const Text('Hives'),
-                                                    style: ElevatedButton.styleFrom(
-                                                        elevation: 5,
-                                                        minimumSize:
-                                                            const Size(100, 35),
-                                                        shape: RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10.0)),
-                                                        onPrimary: Colors.white,
-                                                        primary: const Color
-                                                                .fromARGB(
-                                                            255, 9, 106, 197)),
-                                                  ),
-                                                ],
-                                              )
-                                            ]),
-                                      );
-                                    }))),
-                          ]),
-                    ),
-            )),
-          ),
+                                                ElevatedButton.icon(
+                                                  onPressed: () => {
+                                                    userdata.write(
+                                                        'apiaryIDtoget',
+                                                        _apiaryList[index].id),
+                                                    Navigator.of(context)
+                                                        .pushReplacement(
+                                                            MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const HivesList(),
+                                                    )),
+                                                  },
+                                                  icon:
+                                                      const Icon(Icons.zoom_in),
+                                                  label: const Text('Hives'),
+                                                  style: ElevatedButton.styleFrom(
+                                                      elevation: 5,
+                                                      minimumSize: const Size(
+                                                          100, 35),
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10.0)),
+                                                      onPrimary: Colors.white,
+                                                      primary:
+                                                          const Color.fromARGB(
+                                                              255,
+                                                              9,
+                                                              106,
+                                                              197)),
+                                                ),
+                                              ],
+                                            )
+                                          ]),
+                                    );
+                                  }))),
+                        ]),
+                  ),
+          )),
           floatingActionButton: buildAddOfferButton(context)));
 }
 

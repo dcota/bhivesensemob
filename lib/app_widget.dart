@@ -10,10 +10,9 @@ class AppWidget extends StatelessWidget {
     return AnimatedBuilder(
       builder: (context, child) {
         return MaterialApp(
-          theme: ThemeData(
-            primarySwatch: someThemeSwatch(Colors.green),
-            primaryColor: Colors.green,
-          ),
+          theme: ThemeData(fontFamily: 'Montserrat'
+              //primaryColor: Colors.green,
+              ),
           initialRoute: '/',
           routes: {
             '/': (context) => MyApp(),
@@ -26,7 +25,7 @@ class AppWidget extends StatelessWidget {
   }
 }
 
-MaterialColor someThemeSwatch(Color color) {
+/*MaterialColor someThemeSwatch(Color color) {
   List strengths = <double>[.05];
   Map<int, Color> swatch = {};
   final int r = color.red, g = color.green, b = color.blue;
@@ -46,4 +45,4 @@ MaterialColor someThemeSwatch(Color color) {
   });
 
   return MaterialColor(color.value, swatch);
-}
+}*/

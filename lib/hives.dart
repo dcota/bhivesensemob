@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart';
 import 'package:bhivesensemobile/models/Hive.dart';
+import 'package:bhivesensemobile/hivedetails.dart';
 
 class HivesList extends StatefulWidget {
   const HivesList({super.key});
@@ -18,7 +19,7 @@ class _HivesListState extends State<HivesList> {
   bool showProgress = false;
   final userdata = GetStorage();
   static const c = Color(0xffebc002);
-  List<Hive> _hiveList = [];
+  final List<Hive> _hiveList = [];
   void toggleSubmitState() {
     setState(() {
       showProgress = !showProgress;
@@ -55,13 +56,39 @@ class _HivesListState extends State<HivesList> {
     );
   }
 
-  Future<List<Hive>> getApiaries() async {
+  void showNoHives() {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('WARNING'),
+        content: SingleChildScrollView(
+          child: ListBody(children: const <Widget>[
+            const Text('No Hives in this apiary!'),
+          ]),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => const ApiaryList(),
+              ));
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<List<Hive>> getHives() async {
     var hiveList = <Hive>[];
     try {
       Response response = await get(Uri.parse(
           'https://bhsapi.duartecota.com/device/forapiary/${userdata.read('apiaryIDtoget')}'));
       Map d = jsonDecode(response.body);
-      print(d);
+      if (d['body'].length == 0) {
+        showNoHives();
+      }
       for (var i = 0; i < d['body'].length; i++) {
         hiveList.add(Hive.fromJson(d['body'][i]));
       }
@@ -94,8 +121,7 @@ class _HivesListState extends State<HivesList> {
   @override
   void initState() {
     toggleSubmitState();
-    //getApiaries();
-    getApiaries().then(
+    getHives().then(
       (value) {
         setState(() {
           toggleSubmitState();
@@ -274,13 +300,15 @@ class _HivesListState extends State<HivesList> {
                                                 ),
                                                 ElevatedButton.icon(
                                                   onPressed: () => {
-                                                    print('data')
-                                                    /*Navigator.of(context)
-                                                        .pushNamed(
-                                                            '/offerEdit',
-                                                            arguments:
-                                                                _apiaryList[
-                                                                    index])*/
+                                                    userdata.write(
+                                                        'hiveIDtoget',
+                                                        _hiveList[index].id),
+                                                    Navigator.of(context)
+                                                        .pushReplacement(
+                                                            MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const HiveDetails(),
+                                                    )),
                                                   },
                                                   icon: const Icon(
                                                       Icons.line_axis),
